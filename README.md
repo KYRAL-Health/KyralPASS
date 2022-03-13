@@ -11,22 +11,22 @@ We originally envisioned Kyral as a digital, distributed ledger-based vaccinatio
 
 ## Getting Started & Documentation
 
-[Tutorials](https://github.com/KYRAL-Health/KyralPASS/contract-app)
+[Documentation](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract)
 
 
 ## KyralPASS Instantiation
 
-Follow the tutorials to get started with [KyralPASS](https://github.com/KYRAL-Health/KyralPASS):
+Follow the tutorials to get started with [KyralPASS](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract-app):
 
 
 ```bash
-# Deploy KyralPASS locally on-premise or on a managed or unmanaged cloud service
+# Deploy KyralPASS locally on-premise or on a managed cloud service
 
 # Add members to your group or organization (optional)
 
 # Create or request to join a channel (optional)
 
-# Be a part of the larger, global community on KyralNET and join our Discord Server
+# Be a part of the larger, global community on KyralNET and join our [Discord Server](https://discord.gg/UhD3D2mm8q)
 
 ```
 
