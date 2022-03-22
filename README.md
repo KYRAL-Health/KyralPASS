@@ -8,6 +8,8 @@ Kyral in KyralPASS refers to the chirality of molecules in the universe, specifi
 
 We originally envisioned Kyral as a digital, distributed ledger-based vaccination pass or immunization scheme in 2019 - before COVID-19 was declared a pandemic, and more than a year before mandates by organizations and governments to institute secure COVID-19 vaccination credentials and passports. The scope of this project was to setup a vaccination pass and immunization record system between multiple parties: initially a hospital, a pharmacy, and a university, which mandated students have immunization histories and more recently, have been vaccinated for COVID-19, prior to attendance.
 
+KYRAL’s vision is to reimagine health, healthcare, and privacy in a connected future, such as the one necessitated by the pandemic.
+
 
 ## Getting Started & Documentation
 
@@ -33,11 +35,13 @@ Follow the tutorials to get started with [KyralPASS](https://github.com/KYRAL-He
 
 ## Contributing to KyralPASS
 
-KyralPASS was born at Kyral Health, but belongs to the community. We are releasing the KyralPass platform to the public to allow any individual, group, institution, or organization to create their own secure, internal credentialing system and join the larger, global network that comprises KyralNET. Joining this agnostic, decentralized network will enable secure, private cross-verification of credentials between individuals, groups, institutions, and organizations that make up KyralNET.
+KyralPASS was born at KYRAL Health, but belongs to the community. We are releasing the KyralPass platform to the public to allow any individual, group, institution, or organization to create their own secure, internal credentialing system and join the larger, global network that comprises KyralNET. Joining this agnostic, decentralized network will enable secure, private cross-verification of credentials between individuals, groups, institutions, and organizations that make up KyralNET.
 
 Improve the experience for the community and [open a PR](https://github.com/KYRAL-Health/KyralPASS/pulls).
 
-[Contributor Guidelines](./CONTRIBUTING.md).
+Review our [Contributor Guidelines](./CONTRIBUTING.md).
+
+Join our community on [Discord](https://discord.gg/UhD3D2mm8q).
 
 
 ## License
