@@ -37,9 +37,9 @@ Follow the tutorials to get started with [KyralPASS](https://github.com/KYRAL-He
 
 KyralPASS was born at KYRAL Health, but belongs to the community. We are releasing the KyralPass platform to the public to allow any individual, group, institution, or organization to create their own secure, internal credentialing system and join the larger, global network that comprises KyralNET. Joining this agnostic, decentralized network will enable secure, private cross-verification of credentials between individuals, groups, institutions, and organizations that make up KyralNET.
 
-Improve the experience for the community and [open a PR](https://github.com/KYRAL-Health/KyralPASS/pulls).
-
 Review our [Contributor Guidelines](./CONTRIBUTING.md).
+
+Improve the experience for the community and [open a PR](https://github.com/KYRAL-Health/KyralPASS/pulls).
 
 Join our community on [Discord](https://discord.gg/UhD3D2mm8q).
 
