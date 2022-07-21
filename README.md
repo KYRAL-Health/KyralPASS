@@ -13,24 +13,15 @@ KYRAL’s vision is to reimagine health, healthcare, and privacy in a connected 
 
 ## Getting Started & Documentation
 
-[Documentation](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract)
+[Contract Documentation](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract)
+[Contract API Documentation](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract-app)
 
 
 ## KyralPASS Instantiation
 
-Follow the tutorials to get started with [KyralPASS](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract-app):
+Follow the tutorials to get started with [KyralPASS](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract-app). This contract and application works with any hyperledger fabric network whether running locally or in kubernetes.
 
-
-```bash
-# Deploy KyralPASS locally on-premise or on a managed cloud service
-
-# Add members to your group or organization (optional)
-
-# Create or request to join a channel (optional)
-
-# Be a part of the larger, global community on KyralNET and join our [Discord Server](https://discord.gg/UhD3D2mm8q)
-
-```
+When testing locally, follow the tutorial to make changes. By default the contract is setup to run in a container on kubernetes.
 
 
 ## Contributing to KyralPASS
@@ -39,7 +30,7 @@ KyralPASS was born at KYRAL Health, but belongs to the community. We are releasi
 
 Review our [Contributor Guidelines](./CONTRIBUTING.md).
 
-Improve the experience for the community and [open a PR](https://github.com/KYRAL-Health/KyralPASS/pulls).
+Improve the experience for the community and [open a PR](https://github.com/KYRAL-Health/KyralPASS/pulls). Please create a PR on a branch other than main. e.g. dev
 
 Join our community on [Discord](https://discord.gg/UhD3D2mm8q).
 

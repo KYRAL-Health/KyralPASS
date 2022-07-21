@@ -1,0 +1,72 @@
+	r.HandleFunc("/createHos", testN.createVisitHospital).Methods("POST")
+	r.HandleFunc("/createPharm", testN.createVisitPharmacy).Methods("POST")
+
+    func (testContract *networkHandler) createVisitPharmacy(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("--> Submit: CreatePharm")
+	w.Header().Set("Content-Type", "application/json")
+
+	var asset PharmacySchema
+	_ = json.NewDecoder(r.Body).Decode(&asset)
+
+	log.Println(asset)
+	results, err := testContract.contrac.SubmitTransaction("PutVisitPharmacy", asset.StuID, asset.PharmID, asset.PharmacistID, asset.Dosage, asset.VacID, asset.VacStatus)
+
+	defer r.Body.Close()
+
+	log.Println(err)
+	if err != nil {
+		w.Write([]byte("Failed"))
+	} else {
+		w.Write([]byte(results))
+	}
+
+}
+
+func (testContract *networkHandler) createVisitHospital(w http.ResponseWriter, r *http.Request) {
+
+	log.Println("--> Submit: CreateHospital")
+	w.Header().Set("Content-Type", "application/json")
+
+	var asset HospitalSchema
+	_ = json.NewDecoder(r.Body).Decode(&asset)
+
+	log.Println(asset)
+	results, err := testContract.contrac.SubmitTransaction("PutVisitHospital", asset.StuID, asset.HosID, asset.DocID, asset.ApptDate, asset.RXID, asset.PharmID)
+
+	defer r.Body.Close()
+
+	log.Println(err)
+	if err != nil {
+		w.Write([]byte("Failed"))
+	} else {
+		w.Write([]byte(results))
+	}
+
+}
+
+type HealthCenterSchema struct {
+	StuID            string `json:"stuID"`
+	HcID             string `json:"hcID"`
+	HCRegID          string `json:"hcRegID"`
+	PatientVisitDate string `json:"patientVisitDate"`
+}
+
+type HospitalSchema struct {
+	StuID    string `json:"stuID"`
+	HosID    string `json:"hosID"`
+	DocID    string `json:"docID"`
+	ApptDate string `json:"apptDate"`
+	RXID     string `json:"rxID"`
+	PharmID  string `json:"pharmID"`
+}
+
+type PharmacySchema struct {
+	StuID        string `json:"stuID"`
+	PharmID      string `json:"pharmID"`
+	PharmacistID string `json:"pharmacistID"`
+	VacDate      string `json:"vacDate"`
+	Dosage       string `json:"dosage"`
+	VacID        string `json:"vacID"`
+	VacStatus    string `json:"vacStatus"`
+}
