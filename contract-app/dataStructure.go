@@ -24,3 +24,15 @@ type UserData struct {
 type Field struct {
 	Field string `json:"field"`
 }
+
+type GetUser struct {
+	KyralUID   string `json:"kyralUID"`
+	DecryptKey string `json:"decryptKey"`
+}
+
+type EncryptedUserSubmit struct {
+	KyralUID               string `json:"kyralUID"`
+	KyralEncryptedUser     string `json:"kyralEncryptedUser"`
+	KyralEncryptedUserHash string `json:"kyralEncryptedUserHash"`
+	DecryptKey             string `json:"decryptKey"`
+}

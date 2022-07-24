@@ -6,7 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path"
+	"path/filepath"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -20,19 +22,22 @@ type NetworkHandler struct {
 	method *client.Contract
 }
 
-const (
-	mspID         = "Org1MSP"
-	cryptoPath    = "../../fabric-samples/test-network/organizations/peerOrganizations/org1.example.com"
-	certPath      = cryptoPath + "/users/User1@org1.example.com/msp/signcerts/cert.pem"
-	keyPath       = cryptoPath + "/users/User1@org1.example.com/msp/keystore/"
-	tlsCertPath   = cryptoPath + "/peers/peer0.org1.example.com/tls/ca.crt"
-	peerEndpoint  = "localhost:7051"
-	gatewayPeer   = "peer0.org1.example.com"
-	channelName   = "mychannel"
-	chaincodeName = "KYRAL"
+var (
+	mspID         = os.Getenv("MSP_ID")
+	certPath      = filepath.Join(os.Getenv("CRYPTO_PATH"), "signcerts/cert.pem")
+	keyPath       = filepath.Join(os.Getenv("CRYPTO_PATH"), "keystore")
+	tlsCertPath   = os.Getenv("TLS_CERT_PATH")
+	peerEndpoint  = os.Getenv("PEER_ENDPOINT")
+	gatewayPeer   = os.Getenv("GATEWAY_PEER")
+	channelName   = os.Getenv("CHANNEL_NAME")
+	chaincodeName = os.Getenv("CHAINCODE_NAME")
+	eventUpdateApiKey = os.Getenv("EVENT_UPDATE_API_KEY")
 )
 
 func main() {
+
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
 	r := mux.NewRouter()
 
 	// The gRPC client connection should be shared by all Gateway connections to this endpoint
@@ -54,7 +59,7 @@ func main() {
 		client.WithCommitStatusTimeout(1*time.Minute),
 	)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 	defer gateway.Close()
 
@@ -84,15 +89,26 @@ func main() {
 
 	r.HandleFunc("/changeDescription", ContractEnable.changeDescription).Methods("PUT")
 
+	r.HandleFunc("/createUser", ContractEnable.createUser).Methods("POST")
+
+	r.HandleFunc("/readUser", ContractEnable.readUser).Methods("POST")
+
+	r.HandleFunc("/checkUser/{id}", ContractEnable.CheckUser).Methods("GET")
+
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	startChaincodeEventListening(ctx, network)
+
 	log.Fatal(http.ListenAndServe(":1234", r))
-	//log.Println("==== application-golang ends ====")
+
 }
 
 // newGrpcConnection creates a gRPC connection to the Gateway server.
 func newGrpcConnection() *grpc.ClientConn {
 	certificate, err := loadCertificate(tlsCertPath)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
 	certPool := x509.NewCertPool()
@@ -101,7 +117,7 @@ func newGrpcConnection() *grpc.ClientConn {
 
 	connection, err := grpc.Dial(peerEndpoint, grpc.WithTransportCredentials(transportCredentials))
 	if err != nil {
-		panic(fmt.Errorf("failed to create gRPC connection: %w", err))
+		log.Panicln(fmt.Errorf("failed to create gRPC connection: %w", err))
 	}
 
 	return connection
@@ -111,12 +127,12 @@ func newGrpcConnection() *grpc.ClientConn {
 func newIdentity() *identity.X509Identity {
 	certificate, err := loadCertificate(certPath)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
 	id, err := identity.NewX509Identity(mspID, certificate)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
 	return id
@@ -134,23 +150,50 @@ func loadCertificate(filename string) (*x509.Certificate, error) {
 func newSign() identity.Sign {
 	files, err := ioutil.ReadDir(keyPath)
 	if err != nil {
-		panic(fmt.Errorf("failed to read private key directory: %w", err))
+		log.Panicln(fmt.Errorf("failed to read private key directory: %w", err))
 	}
 	privateKeyPEM, err := ioutil.ReadFile(path.Join(keyPath, files[0].Name()))
 
 	if err != nil {
-		panic(fmt.Errorf("failed to read private key file: %w", err))
+		log.Panicln(fmt.Errorf("failed to read private key file: %w", err))
 	}
 
 	privateKey, err := identity.PrivateKeyFromPEM(privateKeyPEM)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
 	sign, err := identity.NewPrivateKeySign(privateKey)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
 	return sign
+}
+
+func startChaincodeEventListening(ctx context.Context, network *client.Network) {
+	fmt.Println("\n*** Start chaincode event listening")
+
+	events, err := network.ChaincodeEvents(ctx, chaincodeName)
+	if err != nil {
+		panic(fmt.Errorf("failed to start chaincode event listening: %w", err))
+	}
+
+	go func() {
+		for event := range events {
+			fmt.Printf("\n<-- Chaincode event received: %s - %s\n", event.EventName, event.Payload)
+			if event.EventName == "create_user" {
+				httpClient := resty.New()
+				resp, err := httpClient.R().Get(fmt.Sprintf("%s/eventUpdate?kyralID=%s&apiKey=%s", "http://192.168.86.26:8080", string(event.Payload), eventUpdateApiKey))
+				if err != nil {
+					log.Println(fmt.Sprintf("Error sending event update: %v", err))
+				}
+				if resp.StatusCode() != 200 {
+					log.Println(fmt.Sprintf("API call not successful. %v", string(resp.Body())))
+					return
+				}
+				log.Println(fmt.Sprintf("API Update call. StatusCode: %v. Body: %v", resp.StatusCode(), string(resp.Body())))
+			}
+		}
+	}()
 }
