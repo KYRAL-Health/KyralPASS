@@ -183,6 +183,7 @@ GATEWAY_PEER - fqdn of peer
 CHANNEL_NAME - name of fabric channel
 CHAINCODE_NAME - name of chaincode submitted to fabric channel
 EVENT_UPDATE_API_KEY - api key to communicate events to kyral pass api
+API_URL - URL to api to send event based updates
 ```
 
 example environment variables
@@ -195,6 +196,7 @@ TLS_CERT_PATH=/home/lindsay/go/fabric-samples/test-network/organizations/peerOrg
 PEER_ENDPOINT=localhost:7051
 GATEWAY_PEER=peer0.org1.example.com
 EVENT_UPDATE_API_KEY="testAPIKey"
+API_URL="http://localhost:8080"
 ```
 
 If you want to use a .env file instead, make these changes in application.go.  
@@ -246,11 +248,37 @@ curl "http://localhost:1234/readPrivatePublicAsset/1329487"
 ## verifies that data sent from a host is the correct asset
 curl -d '(insert data returned by `curl "http://localhost:1234/readPrivateProperties/1329487"`)' "http://localhost:1234/verifyAssetProperties"
 
-##changes the description field for a specific KyralTxID
+## changes the description field for a specific KyralTxID
 curl -X PUT -d '{"kyralTxID":"1329487","description":"newTest"}' "http://localhost:1234/changeDescription"
 
+## Create user on blockchain - See crypto-utils.go for encryption and decryption format
+curl -L -X POST 'localhost:1234/createUser' -H 'Content-Type: application/json' --data-raw '{
+    "kyralUID": "f9092446-14fe-4c33-9028-7acd119e332e",
+    "kyralEncryptedUser": "m1ysKKLrmWYpfIlFb6hBU6k64rXCRjxPS2mG33_eNZBDky-4vr-kLtTGeJdH3RNoNEZHMSt_2NHtVYBkAMbSo68vgiDv0xf8LAFOzLu6Ds-wWnvI8UVyVjeugootIjk4ls0soSZMz0Y9zbvXBpceGbGI5hlHgF8v78ux3IEbJysSZ1z6GOjK_tzsHJxoLH1NQJOFkyXsWSt8BzFz3k0wQLDbPwgksyBOomfApWQtVfGKaDqRI5thLwk23cJO0NNhiDrleEooWzbXrXkbIagH_21LZceaRfnu8bxUtBIf9L07BscFocyJQFCuPhDVAL4XMiz3VwDevrRTahC6tls_No0whelkKVlMNHO7uylJNejmezg1k62YK7LyhfhhGEMlh90ooO5Dktdwbfc87Q3TNd7JI8lmQqdaqfrWJSk8kEM=",
+    "kyralEncryptedUserHash": "hWIZWbtFVEWyFbryfrcggP6_L-b9Wefj-YtLtnNsRu_EIvCZPB7mT87_28vLIaMiLtLCaefAuZZnQPp8tiDUsA==",
+    "decryptKey": "hma7Uo4p2KYKhsplnQxoobdlRlzfegWM"
+}'
 
+## Read user from blockchain
+curl -L -X POST 'localhost:1234/readUser' -H 'Content-Type: application/json' --data-raw '{
+    "kyralUID":"f9092446-14fe-4c33-9028-7acd119e332e",
+    "decryptKey": "hma7Uo4p2KYKhsplnQxoobdlRlzfegWM"
+}'
 
+## Update user on blockchain
+curl -L -X PUT 'localhost:1234/updateUser' -H 'Content-Type: application/json' --data-raw '{
+    "kyralUID": "f9092446-14fe-4c33-9028-7acd119e332e",
+    "kyralEncryptedUser": "qoc7fHFWdslxix_fm6k6EpU3MbImJ_EHuaKwhG2wOcVEekKdgj6MRAuhznTLPriA_4L-BraJvoqqJFTz14fJ17c4iuEE8lfDjRbOnlPhc5dq1Z5heRqBtf_W5trX9g8LT8-gsLYO6CdNLMTmEAT6_5upINxCeoa3k9bRhYghM46RLX2-AGrmLBVrCRN92EV0Xn0BN1yAP5xvzqcCjO6NGEz3a4_YJXKMsVYSqkHq3-2xUlc97wwJRcY_wxnmyDWpMfUgKTRXdcneXAX8fuOb_xzH5YyueHOo2_jGCpDO6eP0_kDB8JcYsqgPGtOP8ULstsVLaHwkKlM478O67_0a",
+    "kyralEncryptedUserHash": "n8IzST0d_FzSZwyQZe6Uh8Y7wbcDTt_LvZRQmEFACCf2Ws-BTbggXDIVc59Ta7UvV233yHDj2QPRYpxAFxby9Q==",
+    "decryptKey": "hma7Uo4p2KYKhsplnQxoobdlRlzfegWM"
+}'
+
+## Transfer User to different organization
+curl -L -X PUT 'localhost:1234/transferUser' -H 'Content-Type: application/json' --data-raw '{
+    "kyralUID": "f9092446-14fe-4c33-9028-7acd119e332e",
+    "decryptKey": "hma7Uo4p2KYKhsplnQxoobdlRlzfegWM",
+    "orgID": "Org2MSP"
+}'
 ```
 
 ## Cleanup 

@@ -173,11 +173,8 @@ func (contract *NetworkHandler) readUser(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	transient := make(map[string][]byte)
-	transient["decryptPassword"] = []byte(userPost.DecryptKey)
-
 	results, err := contract.method.EvaluateTransaction("ReadUser",
-		userPost.KyralUID, userPost.DecryptKey,
+		userPost.KyralUID,
 	)
 	if err != nil {
 		log.Printf("failed to verify asset properties: %v\n", err)
@@ -186,10 +183,27 @@ func (contract *NetworkHandler) readUser(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	var returnedUser EncryptedUserSubmit
+	if err := json.Unmarshal(results, &returnedUser); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	if _, match, err := decrypt(userPost.DecryptKey, returnedUser.KyralEncryptedUser, returnedUser.KyralEncryptedUserHash); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		return
+	} else if !match {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Incorrect decrypt key"))
+		return
+	}
+
 	// json header
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(results)
+	json.NewEncoder(w).Encode(returnedUser)
 }
 
 func (contract *NetworkHandler) CheckUser(w http.ResponseWriter, r *http.Request) {

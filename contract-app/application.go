@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
@@ -11,6 +12,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/gorilla/mux"
 	"github.com/hyperledger/fabric-gateway/pkg/client"
 	"github.com/hyperledger/fabric-gateway/pkg/identity"
@@ -23,15 +25,16 @@ type NetworkHandler struct {
 }
 
 var (
-	mspID         = os.Getenv("MSP_ID")
-	certPath      = filepath.Join(os.Getenv("CRYPTO_PATH"), "signcerts/cert.pem")
-	keyPath       = filepath.Join(os.Getenv("CRYPTO_PATH"), "keystore")
-	tlsCertPath   = os.Getenv("TLS_CERT_PATH")
-	peerEndpoint  = os.Getenv("PEER_ENDPOINT")
-	gatewayPeer   = os.Getenv("GATEWAY_PEER")
-	channelName   = os.Getenv("CHANNEL_NAME")
-	chaincodeName = os.Getenv("CHAINCODE_NAME")
+	mspID             = os.Getenv("MSP_ID")
+	certPath          = filepath.Join(os.Getenv("CRYPTO_PATH"), "signcerts/cert.pem")
+	keyPath           = filepath.Join(os.Getenv("CRYPTO_PATH"), "keystore")
+	tlsCertPath       = os.Getenv("TLS_CERT_PATH")
+	peerEndpoint      = os.Getenv("PEER_ENDPOINT")
+	gatewayPeer       = os.Getenv("GATEWAY_PEER")
+	channelName       = os.Getenv("CHANNEL_NAME")
+	chaincodeName     = os.Getenv("CHAINCODE_NAME")
 	eventUpdateApiKey = os.Getenv("EVENT_UPDATE_API_KEY")
+	apiURL            = os.Getenv("API_URL")
 )
 
 func main() {
@@ -94,6 +97,10 @@ func main() {
 	r.HandleFunc("/readUser", ContractEnable.readUser).Methods("POST")
 
 	r.HandleFunc("/checkUser/{id}", ContractEnable.CheckUser).Methods("GET")
+
+	r.HandleFunc("/transferUser", ContractEnable.transferUser).Methods("PUT")
+
+	r.HandleFunc("/updateUser", ContractEnable.updateUser).Methods("PUT")
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -184,7 +191,7 @@ func startChaincodeEventListening(ctx context.Context, network *client.Network) 
 			fmt.Printf("\n<-- Chaincode event received: %s - %s\n", event.EventName, event.Payload)
 			if event.EventName == "create_user" {
 				httpClient := resty.New()
-				resp, err := httpClient.R().Get(fmt.Sprintf("%s/eventUpdate?kyralID=%s&apiKey=%s", "http://192.168.86.26:8080", string(event.Payload), eventUpdateApiKey))
+				resp, err := httpClient.R().Get(fmt.Sprintf("%s/eventUpdate?kyralID=%s&apiKey=%s", apiURL, string(event.Payload), eventUpdateApiKey))
 				if err != nil {
 					log.Println(fmt.Sprintf("Error sending event update: %v", err))
 				}
