@@ -26,10 +26,10 @@ clone the repo in the GOPATH folder or watever folder that was made
 
 ```bash
 ##HTTPS
-git clone "https://gitlab.com/z3fc/shf_continuity.git"
+git clone "https://github.com/KYRAL-Health/KyralPASS.git"
 
 ##SSH
-git clone "git@gitlab.com:z3fc/shf_continuity.git"
+git clone "git@github.com:KYRAL-Health/KyralPASS.git"
 ```
 
 go into the `contract` and `contract-app` folders and type `go get ./...`
