@@ -1,6 +1,6 @@
 # KyralPASS<sup>TM</sup>
 
-> **KyralPass<sup>TM</sup> is a secure digital passport for the verification of any credential.**
+> **KyralPASS<sup>TM</sup> is a secure digital passport for the verification of any credential.**
 
 KyralPASS is a decentralized, user-owned digital health passport for identity verification, vaccination status, or any other Web3 credential for yourself, your community, or your organization. The technology is built on an open-source, private, permissioned blockchain based on Hyperledger Fabric. KyralPASS evolved from previous iterations dubbed the Sankofa Healthcare Framework (SHF) for the ownership of health data and to share immunization records, where Sankofa is a mythical bird that symbolizes learning from past knowledge and wisdom, and means to "go back and get it" in the Twi culture of the Akan people of Ghana.
 
