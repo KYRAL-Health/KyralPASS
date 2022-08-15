@@ -1,4 +1,4 @@
-# KyralPASS<sup>TM</sup>
+# KyralPASS<sup>
 
 > **KyralPASS<sup>TM</sup> is a secure digital passport for the verification of any credential.**
 
