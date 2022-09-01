@@ -4,7 +4,7 @@
 
 KyralPASS is a decentralized, user-owned digital health passport for identity verification, vaccination status, or any other digital credential for yourself, your community, or your organization. The technology is built on Hyperledger Fabric, an enterprise-grade, private permissioned blockchain that itself is open-source and secure.
 
-KyralPASS can stand alone, but can be part of a larger network called KyralNET and has far more potential than just as a vaccination passport or credentialing system - for more information, please go to our website at [KYRAL Health](https://kyralhealth.com). KYRAL Health is re-imagining health and re-architecting healthcare from the ground-up with privacy, cybersecurity, and data ownership first in an as yet unregulated Web3 future.
+KyralPASS can stand alone, but can be part of a larger network called KyralNET and has far more potential than just as a vaccination passport or credentialing system - for more information, please visit our website at [KYRAL Health](https://kyralhealth.com). Kyral is re-imagining health and re-architecting healthcare from the ground-up with privacy, cybersecurity, and data ownership first in an as yet unregulated Web3 future.
   
   
 ## Project History
