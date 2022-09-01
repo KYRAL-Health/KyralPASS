@@ -4,15 +4,18 @@
 
 KyralPASS is a decentralized, user-owned digital health passport for identity verification, vaccination status, or any other digital credential for yourself, your community, or your organization. The technology is built on Hyperledger Fabric, an enterprise-grade, private permissioned blockchain that itself is open-source and secure.
 
-We originally envisioned KyralPASS as a privacy-preserving digital vaccination pass and immunization scheme in 2019 - before COVID-19 was declared a pandemic, and more than a year before governments and organizations tried to implement digital COVID-19 vaccination status, credentialing, and health passport systems. The scope of this project was to setup a vaccination pass and immunization record system between multiple parties: initially a hospital, a pharmacy, and a university, in which the latter organization required students have immunization histories on record and, more recently, required students be vaccinated for COVID-19 prior to enrollment or attendance.
+KyralPASS can stand alone, but can be part of a larger network called KyralNET and has far more potential than just as a vaccination passport or credentialing system - for more information, please go to our website at [KYRAL Health](https://kyralhealth.com). KYRAL Health is re-imagining health and re-architecting healthcare from the ground-up with privacy, cybersecurity, and data ownership first in an as yet unregulated Web3 future.
+  
+  
+## Project History
 
 KyralPASS evolved from previous iterations dubbed the Sankofa Healthcare Framework (SHF), the purpose of which was to share immunization records, and where Sankofa stood for the mythical bird that symbolizes learning from past knowledge and wisdom and means to "go back and get it" in the Twi culture of the Akan people of Ghana - quite fitting, as some of our health histories are somewhere in the past or in inaccessible repositories.
+  
+We originally envisioned KyralPASS as a privacy-preserving digital vaccination pass and immunization scheme in 2019 - before COVID-19 was declared a pandemic, and more than a year before governments and organizations tried to implement digital COVID-19 vaccination status, credentialing, and health passport systems. The scope of this project was to setup a vaccination pass and immunization record system between multiple parties: initially a hospital, a pharmacy, and a university, in which the latter organization required students have immunization histories on record and, more recently, required students be vaccinated for COVID-19 prior to enrollment or attendance.
 
 Kyral in KyralPASS refers to the chirality of molecules in the universe, specifically DNA, the inspiration for this endeavor and, therefore, of life itself - where chiral structures act as a form of information storage similar to zeros and ones, mirror images which are non-superimposable but can exist in both forms, and thus digitally equivalent but unique. Also known as enantiomers, chirality brings diversity and the possibility of mirror worlds, or what some refer to as a "mirror life", which is fitting in a Web3 future where we will have mirrored, digital twins of ourselves.
 
-KyralPASS can stand alone, but can be part of a larger network called KyralNET and has far more potential than just as a vaccination passport or credentialing system - for more information, please go to our website at [KYRAL Health](https://kyralhealth.com). KYRAL Health is re-imagining health and re-architecting healthcare from the ground-up with privacy, cybersecurity, and data ownership first in an as yet unregulated Web3 future.
-
-
+  
 ## Getting Started & Documentation
 
 [Contract Documentation](https://github.com/KYRAL-Health/KyralPASS/tree/main/contract)
