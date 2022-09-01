@@ -1,6 +1,6 @@
 # KyralPASS<sup>
 
-> **KyralPASS<sup>TM</sup> is a secure digital passport for the verification of any credential.**
+> **KyralPASS<sup>TM</sup> is a secure digital passport for the verification of credentials.**
 
 KyralPASS is a decentralized, user-owned digital health passport for identity verification, vaccination status, or any other digital credential for yourself, your community, or your organization. The technology is built on Hyperledger Fabric, an enterprise-grade, private permissioned blockchain that itself is open-source and secure.
 
