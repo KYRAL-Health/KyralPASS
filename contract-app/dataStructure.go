@@ -36,3 +36,9 @@ type EncryptedUserSubmit struct {
 	KyralEncryptedUserHash string `json:"kyralEncryptedUserHash"`
 	DecryptKey             string `json:"decryptKey"`
 }
+
+type UserTransferPost struct {
+	KyralUID   string `json:"kyralUID"`
+	DecryptKey string `json:"decryptKey"`
+	OrgID      string `json:"orgID"`
+}
