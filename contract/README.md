@@ -11,6 +11,7 @@ sudo apt install make golang
 ```
 
 # Running Locally
+
 This contract is built to be used running in a container on a kubernetes based network. To use it with the test network a few changes need to be made.
 
 The run function should go from:
@@ -133,6 +134,23 @@ func run() error {
 }
 ```
 
+# Plain Text User Struct
+Use this struct for the user object. Encrypted User should be this object converted to json string and then encrypted using the function in crypt-utils.go
+```go
+type UserBlockchain struct {
+	KyralID   uuid.UUID `json:"kyralID" gorm:"type:uuid;default:uuid_generate_v4();unique"`
+	UpdatedAt time.Time
+	FirstName string         `json:"firstName"`
+	LastName  string         `json:"lastName"`
+	Password  string         `json:"password"`
+	Email     string         `json:"email" gorm:"unique"`
+	Address   string         `json:"address"`
+	Telecom   string         `json:"telecom"`
+	Gender    string         `json:"gender"`
+	BirthDate datatypes.Date `json:"birthDate"`
+}
+```
+
 # Smart Contract CRUD Functions
 
 ## <ins>CreateOrgVisit</ins>
@@ -162,7 +180,7 @@ Updates the public description for an asset checking the users identity before c
 
 ## <ins>CreateNewUser</ins>
 
-Creates a new user on chain. This user object needs to be encrypted with hashes and decrypt key provided to verify that the key is correct and matches the provided hash. Encryption needs to match the functions found in crypto-utils.go
+Creates a new user on chain. This user object needs to be encrypted with hashes to verify correct encryption/decryption. It is the clients job to ensure that data is encrypted properly and that decrypt key is able to decrypt ciphertext and hash matches. Encryption needs to match the functions found in crypto-utils.go
 
 | Input Data         | Data Type |
 | ------------------ | --------- |
@@ -170,9 +188,26 @@ Creates a new user on chain. This user object needs to be encrypted with hashes 
 | kyralEncryptedUser | String    |
 | hash\_             | String    |
 
-| Transient Data  | Data Type |
-| --------------- | --------- |
-| decryptPassword | String    |
+## <ins>UpdateUserData</ins>
+
+Update user object on chain provided that the object belongs to the same organization. It is the clients job to ensure that data is encrypted properly and that decrypt key is able to decrypt ciphertext and hash matches.  
+Encryption needs to match the functions found in crypto-utils.go
+
+| Input Data         | Data Type |
+| ------------------ | --------- |
+| kyralUID           | String    |
+| kyralEncryptedUser | String    |
+| hash\_             | String    |
+
+## <ins>TransferUser</ins>
+
+Transfer on chain user object to a different organization. orgID field is an organizations MSPID. This changes the endorsement policy on a key level. If the MSPID does not exist, unfortunately the record is locked as no organization will match the organization policy.  
+This can be modified to include another trusted organization to be a part of the endorsement policy so this situation does not occur.
+
+| Input Data | Data Type |
+| ---------- | --------- |
+| kyralUID   | String    |
+| orgID      | String    |
 
 # Smart Contract Query Functions
 
@@ -234,12 +269,11 @@ Verifies that the hash stored in the private collection is correct to validate a
 
 ## <ins>ReadUser</ins>
 
-Retrieve encrypted user object from the blockchain. Decrypt key parameter is used to verify that the key is correct, able to decrypt user object and match hashes.
+Retrieve encrypted user object from the blockchain. Client responsibility to check if decryption key is able to decypt ciphertext and plaintext hash matches on chain hash field.
 
 | Input Data | Data Type |
 | ---------- | --------- |
 | kyralUID   | String    |
-| decryptPassword | String    |
 
 ## <ins>CheckUser</ins>
 
