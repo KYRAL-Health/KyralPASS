@@ -160,6 +160,22 @@ func run() error {
 }
 ```
 
+## Plain Text User Struct
+Use this struct for the user object. Encrypted User should be this object converted to json string and then encrypted using the function in crypt-utils.go
+```go
+type UserBlockchain struct {
+	KyralID   uuid.UUID `json:"kyralID" gorm:"type:uuid;default:uuid_generate_v4();unique"`
+	UpdatedAt time.Time
+	FirstName string         `json:"firstName"`
+	LastName  string         `json:"lastName"`
+	Password  string         `json:"password"`
+	Email     string         `json:"email" gorm:"unique"`
+	Address   string         `json:"address"`
+	Telecom   string         `json:"telecom"`
+	Gender    string         `json:"gender"`
+	BirthDate datatypes.Date `json:"birthDate"`
+}
+
 ## Deploying Contract
 
 Back in the `fabric-samples/test-network` folder
