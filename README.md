@@ -32,7 +32,7 @@ When testing locally, follow the tutorial to make changes. By default the contra
 
 ## Contributing to KyralPASS
 
-KyralPASS was born at KYRAL Health, but belongs to the community. We are releasing the KyralPASS platform to the public to allow any individual, group, institution, or organization to create their own secure, internal credentialing system and join the larger, global network that comprises KyralNET. Joining this platform/location/cloud-agnostic, decentralized network will enable secure, private cross-verification of credentials between individuals, groups, institutions, and organizations that make up KyralNET.
+KyralPASS was born at KYRAL Health, but belongs to the community. We are releasing the KyralPASS platform to the public to allow any individual, group, institution, or organization to create their own secure, internal credentialing system and join the larger, global network that comprises KyralNET. [Joining](https://github.com/KYRAL-Health/KyralPASS/blob/main/how-to-connect.md) this platform/location/cloud-agnostic, decentralized network will enable secure, private cross-verification of credentials between individuals, groups, institutions, and organizations that make up KyralNET.
 
 Review our [Contributor Guidelines](./CONTRIBUTING.md).
 
