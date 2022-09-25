@@ -38,7 +38,20 @@ Review our [Contributor Guidelines](./CONTRIBUTING.md).
 
 Improve the experience for the community and [open a PR](https://github.com/KYRAL-Health/KyralPASS/pulls). Please create a PR on a branch other than main. e.g. dev
 
-Join our community on [Discord](https://discord.gg/RHSSuraTVP).
+
+## Joining KyralNET
+
+There are three ways to our network and community:
+
+1) Stand up your own network as described and follow the instructions on ["How to Join"](https://github.com/KYRAL-Health/KyralPASS/blob/main/how-to-connect.md)
+
+OR
+
+2) Subscribe to our Beta at [KYRAL Health](https://kyralhealth.com/#form) with the required information or with an invitation code
+
+OR
+
+3) Join our community on [Discord](https://discord.gg/RHSSuraTVP).
 
 
 ## License
